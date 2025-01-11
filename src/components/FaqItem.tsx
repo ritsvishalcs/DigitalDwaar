@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { SlideDown } from "react-slidedown";
-import "react-slidedown/lib/slidedown.css";
+import { motion } from "framer-motion";
 
 // ✅ Define Item Type
 interface FaqItemProps {
@@ -13,7 +12,7 @@ interface FaqItemProps {
   index: number;
 }
 
-// ✅ Component with TypeScript Types
+// ✅ Component with Framer Motion for Slide Animation
 const FaqItem: React.FC<FaqItemProps> = ({ item, index }) => {
   const [activeId, setActiveId] = useState<string | number | null>(null);
 
@@ -56,12 +55,17 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index }) => {
         </div>
       </div>
 
-      {/* Answer Section */}
-      <SlideDown>
+      {/* Answer Section with Framer Motion */}
+      <motion.div
+        initial={false}
+        animate={{ height: active ? "auto" : 0, opacity: active ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        style={{ overflow: "hidden" }}
+      >
         {active && (
           <div className="body-3 px-7 py-3.5">{item.answer}</div>
         )}
-      </SlideDown>
+      </motion.div>
 
       {/* Background Transition */}
       <div
